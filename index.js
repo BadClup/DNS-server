@@ -1,13 +1,24 @@
 const dgram = require('dgram'),
     server = dgram.createSocket('udp4'),
-    dnsPacket = require('dns-packet');
+    dnsPacket = require('dns-packet'),
+    url = (process.env.URL || 'test.badclup').toLowerCase();
 
 
 server.on('message', (message, rinfo) => {
-    const msg = dnsPacket.decode(message);
-    //console.log(msg);
-    if (msg.questions[0].name === 'test.badclup') {
+    const msg = dnsPacket.decode(message),
+        name = msg.questions[0].name.toLowerCase(),
+        splitName = name.split('.'),
+
+        domainName = splitName[0] === 'www'?
+            splitName.slice(1).join('.'):
+            name;
+
+
+    console.log(msg.questions[0].name);
+
+    if (domainName === url) {
         console.log(msg.questions[0].name)
+
         const response = dnsPacket.encode({
             id: msg.id,
             type: 'response',
@@ -16,7 +27,7 @@ server.on('message', (message, rinfo) => {
             questions: msg.questions,
             answers: [
                 {
-                    name: msg.questions[0].name,
+                    name: domainName,
                     type: msg.questions[0].type,
                     ttl: 300,
                     class: msg.questions[0].class,
@@ -28,6 +39,8 @@ server.on('message', (message, rinfo) => {
             additionals: []
         });
         console.log('response', dnsPacket.decode(response));
+
+
         server.send(response, rinfo.port, rinfo.address, (err) => {
             err?
                 server.close() :
