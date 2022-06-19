@@ -1,0 +1,22 @@
+{
+  "name": "dns-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BadClup/DNS-server.git"
+  },
+  "author": "BadClup",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/BadClup/DNS-server/issues"
+  },
+  "homepage": "https://github.com/BadClup/DNS-server#readme",
+  "dependencies": {
+    "dns-packet": "^5.4.0"
+  }
+}
