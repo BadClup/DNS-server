@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
+
+    <script>
+        const gun = GUN();
+        gun.get('domains').get('test.badclup').get('ipv4').once(console.log);
+    </script>
+</body>
+</html>
