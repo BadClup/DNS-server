@@ -4,7 +4,7 @@ module.exports = function DNS() {
 
         dnsPacket = require('dns-packet'),
 
-        dnsModel = require('../models/DNS.model'),
+        dnsModel = require('./models/DNS.model'),
 
         socket = dgram.createSocket('udp4');
 
