@@ -6,8 +6,8 @@ const server = require('./HTTPserver'),
 
 
 
-    dnsModel.startGunServer({web: server.httpServer});
-    DNS();
+    //dnsModel.startGunServer({web: server.httpServer});
+    setTimeout(() => {DNS()}, 0)
 
 
 

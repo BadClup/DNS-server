@@ -23,5 +23,6 @@ const http = require('http'),
 
 
 module.exports = {
-    httpServer
+    httpServer,
+    app
 }

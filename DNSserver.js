@@ -8,9 +8,14 @@ module.exports = function DNS() {
 
         socket = dgram.createSocket('udp4');
 
+    /*setTimeout(() => {
+        //dnsModel.gunModel.get('domains').get('test.badclup').get('ipv4').on(console.log);
+        console.log(dnsModel.gunModel)
+    }, 0)*/
 
-    socket.on('message', async (message, rinfo) => {
-        const msg = dnsPacket.decode(message)
+
+    socket.on('message', (message, rinfo) => {
+        const msg = dnsPacket.decode(message);
         const response = dnsModel.responseModel(msg, {
             ip: dnsModel.resolverModel(msg, {
                 ipType: 'ipv4'// TODO: dynamic ipType
