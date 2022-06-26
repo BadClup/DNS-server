@@ -1,16 +1,25 @@
-const server = require('./HTTPserver'),
-    DNS = require('./DNSserver'),
-    dnsModel = require('./models/DNS.model'),
+// this file is something like npm scripts
 
-    PORT = process.env.PORT || 8080;
+const {exec:e} = require('shelljs'),
+    path = require('path'),
+    fs = require('fs');
 
+const config = JSON.parse(fs.readFileSync('config.json').toString())
+if (!config.built) {
+    e('cd server && npm i && cd ..');
+    e(`cd client && npm i && cd ..`);
 
+    config.built = true
 
-    //dnsModel.startGunServer({web: server.httpServer});
-    setTimeout(() => {DNS()}, 0)
+    fs.writeFile('./config.json', JSON.stringify(config),err => {
+        if (err){
+            console.log('error writing config.json', err);
+        } else {
+            console.log('Successfully built');
+        }
+    })
+}
 
-
-
-server.httpServer.listen(PORT, () => {
-    console.log(`server is listening on port: ${PORT}`)
-});
+setTimeout(() => {
+    e(`concurrently --kill-others \"node ${path.join('server', 'server.js')}\" \"node ${path.join('client', 'server.js\"')}`)
+}, 0)
