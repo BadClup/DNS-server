@@ -1,17 +1,13 @@
 const dnsPacket = require("dns-packet");
 
-let gun,
-    domains;
-
 const resolverModel = function(msg, options) {
-    return
+
 }
 
 
-const responseModel = function(msg, options){
-    if(options.ip == 'undefined') {
-        options.ip = 'ipv4';
-    }
+const responseModel = function(domainAddress, msg, ip){
+
+    console.log("test-log" ,domainAddress, msg, ip);
 
     return dnsPacket.encode({
         id: msg.id,
@@ -21,12 +17,12 @@ const responseModel = function(msg, options){
         questions: msg.questions,
         answers: [
             {
-                name: msgToName(msg),
+                name: domainAddress,
                 type: msg.questions[0].type,
                 ttl: 300,
                 class: msg.questions[0].class,
                 flush: false,
-                data: options.ip
+                data: ip
             }
         ],
         authorities: [],
@@ -36,8 +32,6 @@ const responseModel = function(msg, options){
 
 
 module.exports = {
-    gun,
-    domains,
     resolverModel,
     responseModel
 }

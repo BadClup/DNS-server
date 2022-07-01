@@ -1,16 +1,38 @@
 const dgram = require('dgram'),
+    fs = require('fs'),
+    path = require('path'),
 
     dnsPacket = require('dns-packet'),
-    GUN = require('gun/gun'),
+    mongodb = require('mongodb'),
 
     dnsModel = require('./models/DNS.model'),
 
     socket = dgram.createSocket('udp4'),
-    gun = GUN({peers: ['http://localhost:8080/gun']});
+    dbUrl = fs.readFileSync(path.join(__dirname, '..', 'mongodb-login')).toString();
 
-    gun.get('domains').get('test.badclup').get('ipv4').on(console.log);
+    let DNS;
 
+mongodb.MongoClient.connect(dbUrl, { useNewUrlParser: true }, (err, result) => {
+    if (err) throw err;
+    DNS = result.db('DNS').collection('DNS');
+})
 
+/*
+mongoose
+    .connect(dbUrl, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        ssl: true
+    })
+    .then(() => {
+        console.log('Connected to DB')
+    })
+    .catch(err => {
+        console.error('error', err);
+    })
+
+const DNS = mongoose.model("DNS", dnsSchema);
+*/
 
 
 socket.on('message', (message, rinfo) => {
@@ -22,38 +44,27 @@ socket.on('message', (message, rinfo) => {
     }
 
 
-    let ipType = 'ipv4';
-    if(ipType == 'undefined'){
-        ipType = 'ipv4'     // TODO: dynamic ipType;
-    }
+    let ipType = 'ipv4'; // TODO: dynamic ipType;
 
 
-    new Promise((resolve, reject) => {
-        gun.get('domains').once(console.log)
-        gun.get('domains')
-            .get(domainAddress)
-            //.get(ipType === 'ipv4' || ipType === 'ipv6'? ipType : () => { throw 'error'})
-            .get('ipv4')
-            .once(data => {
-                if (data) {
-                    console.log(data);
-                    resolve(data);
-                } else {
-                    console.log(data)
-                    reject(data);
-                }
-            });
-    })
+    DNS.findOne({domain: domainAddress})
         .then(data => {
-            console.log(data);
-            socket.send(dnsModel.responseModel(msg, {ip: data}, rinfo.port, rinfo.address, err => {
-                err ?
-                    console.error(err) :
-                    console.log('data sent:', data);
-            }))
-        }).catch(socket.close)
-})
 
+            if (data.ipv4 === undefined && data.ipv6 === undefined) {
+                console.log('404 NOT FOUND', data)
+                socket.close()
+            } else {
+                console.log(data)
+                const ip = ipType === 'ipv4' ? data.ipv4 : data.ipv6;
+
+                socket.send(dnsModel.responseModel(domainAddress, msg, ip), rinfo.port, rinfo.address, err => {
+                    err ?
+                        console.error(err) :
+                        console.log('data sent:', data);
+                })
+            }
+        })
+})
 
 
 socket.bind(53,undefined , () => {
