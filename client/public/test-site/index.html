@@ -6,11 +6,12 @@
     <link type="text/css" rel="stylesheet" href="style.css">
 </head>
 <body>
-    <script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gun/sea.js"></script>
-    <script src="index.js" defer></script>
-
+    <script type="module">
+        import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
+    </script>
+    <script src="index.js"></script>
     <h1 style="text-align: center; color: aliceblue">TEST SITE</h1>
+
 
 </body>
 </html>

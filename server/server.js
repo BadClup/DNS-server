@@ -15,24 +15,9 @@ const dgram = require('dgram'),
 mongodb.MongoClient.connect(dbUrl, { useNewUrlParser: true }, (err, result) => {
     if (err) throw err;
     DNS = result.db('DNS').collection('DNS');
+    console.log('Connected to database')
 })
 
-/*
-mongoose
-    .connect(dbUrl, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        ssl: true
-    })
-    .then(() => {
-        console.log('Connected to DB')
-    })
-    .catch(err => {
-        console.error('error', err);
-    })
-
-const DNS = mongoose.model("DNS", dnsSchema);
-*/
 
 
 socket.on('message', (message, rinfo) => {

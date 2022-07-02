@@ -1,0 +1,38 @@
+// I know that JSON doesn't support comments, but I won't care
+
+// Simple domain structure (uses for DNS-Server):
+[
+  {
+    "name": "[String] domain name with only one dot for example: 'test.badclup' ",
+    "ipv4": "[String] ipv4 for example: '127.0.0.1' ",
+    "ipv6": "[String] ipv6 for example: '0000:0000:0000:0000:0000:0000:0000:0001' OR '::1' "
+  }
+]
+
+// Extended domain structure (uses mainly for getting information about user)
+
+
+//                  if (type === 'user'):
+[
+  {
+    "type": "user",
+    "name": "same as above",
+    "password": "'ktoPytal' message, but encrypted using password",
+    "integrations" : {
+      //examples below
+      "example.domain": [ "means that 'test.badclup' user has permissions to write here links (something like public user information repository)" ],
+      "badclup": [ "official BadClup links" ]
+    },
+    "information": {
+      // Object with informations about user, encryped or not, fully managed by user
+    }
+  }
+]
+
+//                  else:
+[
+  {
+    "type": "domain",
+    "owner": "this domain owner username"
+  }
+]
