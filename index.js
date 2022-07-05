@@ -5,26 +5,25 @@ const {exec:e} = require('shelljs'),
     fs = require('fs');
 
 
-if (!fs.existsSync('mongodb-login')) {
-    fs.appendFile('mongodb-login', 'replace this text with your mongoDB login', () => {
-        console.log('mongodb-login file created')
-    })
-}
 
 const config = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json')).toString())
 if (!config.built) {
     e(`cd ${path.join(__dirname, 'server')} && npm i`);
     e(`cd ${path.join(__dirname, 'client')} && npm i && cd ..`);
 
+    fs.appendFile(path.join(__dirname, 'mongodb-login'), 'replace this text with your mongoDB login', () => {
+        //useless callback ;)
+    })
+
     config.built = true
 
     fs.writeFile(path.join(__dirname, 'config.json'), JSON.stringify(config),err => {
         if (err){
             console.log('error writing config.json', err);
-        } else {
-            console.log('Successfully built');
         }
     })
+    console.log('\x1b[31m', 'Please paste your mongoDB connection url into /DNS-server/mongodb-login file', '\x1b[0m')
+    return;
 }
 
 setTimeout(() => {
