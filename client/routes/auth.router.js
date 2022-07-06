@@ -18,13 +18,13 @@ login.route('/')
                 if (data) {
                     res.status(200).json({
                         status: 200,
-                        areLoggedIn:true
+                        isLoggedIn:true
                     })
                 } else {
                     res.status(400).json({
                         error: "bad login or password",
                         status: 400,
-                        areLoggedIn: false
+                        isLoggedIn: false
                     })
                 }
             })
