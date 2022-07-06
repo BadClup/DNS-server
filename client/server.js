@@ -1,6 +1,7 @@
 const http = require('http'),
 
     express = require('express'),
+    CORS = require('cors'),
 
     testSiteRouter = require('./routes/testSite.router'),
     authRouter = require('./routes/auth.router'),
@@ -10,7 +11,8 @@ const http = require('http'),
 
     PORT = process.env.PORT || 5000;
 
-    app.use(express.json())
+    app.use(CORS());
+    app.use(express.json());
 
     app.use('/', testSiteRouter);
     app.use('/login', authRouter.login);
