@@ -2,7 +2,7 @@ const path = require('path'),
 
     express = require('express'),
 
-    accounts = require('../models/mongodb.model');
+    mongoModel = require('../models/mongodb.model');
 
 
 const login = express.Router()
@@ -10,11 +10,14 @@ login.route('/')
     .post((req, res) => {
         const body = req.body;
 
-        accounts.findOne({
+        console.log('findOne', mongoModel.ACCOUNTS.findOne);
+
+        mongoModel.ACCOUNTS.findOne({
             name: body.login,
             password: body.password
         })
             .then(data => {
+                console.log('login-post', typeof req.body, req.body, req.body.login, data)
                 if (data) {
                     res.status(200).json({
                         status: 200,

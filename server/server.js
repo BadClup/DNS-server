@@ -12,10 +12,11 @@ const dgram = require('dgram'),
 
     let DNS;
 
-mongodb.MongoClient.connect(dbUrl, { useNewUrlParser: true }, (err, result) => {
+
+mongodb.MongoClient.connect(dbUrl, {useNewUrlParser: true}, (err, result) => {
     if (err) throw err;
     DNS = result.db('DNS').collection('DNS');
-    console.log('Connected to database')
+    console.log('Connected to database');
 })
 
 
