@@ -23,7 +23,6 @@ try {
         if (err) throw err;
         mongoModel.ACCOUNTS = result.db('DNS').collection('ACCOUNTS');
         console.log('Connected to database');
-        console.log(typeof mongoModel)
     });
 } catch (err) {
     console.log('database error', err);
@@ -35,6 +34,7 @@ app.use(express.json());
 
 app.use('/', testSiteRouter);
 app.use('/login', authRouter.login);
+app.use('/register', authRouter.register);
 
 
 
