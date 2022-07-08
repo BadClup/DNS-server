@@ -47,8 +47,9 @@ register.route('/')
                 .then(data => {
                     if(data){
                         res.status(400).json({
-                            error: 'That login is taken',
-                            status: 400
+                            error: 'That username is taken',
+                            status: 400,
+                            wasRegistered: false
                         })
                     } else {
                         mongoModel.ACCOUNTS.insert({
@@ -56,7 +57,8 @@ register.route('/')
                             password: body.password
                         })
                         res.status(201).json({
-                            status: 201
+                            status: 201,
+                            wasRegistered: true
                         })
                     }
                 })
@@ -64,7 +66,8 @@ register.route('/')
         } catch (err) {
             res.status(400).json({
                 error: 'Not recognized error',
-                status: 400
+                status: 400,
+                wasRegistered: false
             })
         }
 
