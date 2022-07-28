@@ -1,9 +1,14 @@
 {
-  "name": "dns-badclup",
+  "name": "dns-server",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "out of date: {",
+  "main": "./src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./src/server.js",
+    "watch": "nodemon ./src/server.js",
+    "deploy": "npm build && npm start",
+    "build": "npm i && echo -e \"\\033[0;31m TO SET UP MONGODB TYPE: \\033[0;36m \\\"npm run mongo-login \\033[1;36m <YOUR MONGO LOGIN URL>\\\\033[0;36m\\\"\\033[0m\"",
+    "mongo-login": "node mongo-login.js"
   },
   "repository": {
     "type": "git",
@@ -16,9 +21,8 @@
   },
   "homepage": "https://github.com/BadClup/DNS-server#readme",
   "dependencies": {
-    "concurrently": "^7.2.2",
-    "shelljs": "^0.8.5",
-    "typescript": "^4.7.4"
-  },
-  "description": ""
+    "cors": "^2.8.5",
+    "dns-packet": "^5.4.0",
+    "mongodb": "^4.8.1"
+  }
 }

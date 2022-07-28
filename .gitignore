@@ -1,4 +1,3 @@
-mongodb-login
-.idea
-radata
+.idea/*
 config.json
+node_modules
