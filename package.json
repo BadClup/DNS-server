@@ -1,14 +1,15 @@
 {
   "name": "dns-server",
   "version": "1.0.0",
-  "description": "out of date: {",
+  "description": "",
   "main": "./src/server.js",
   "scripts": {
-    "start": "node ./src/server.js",
-    "watch": "nodemon ./src/server.js",
-    "deploy": "npm build && npm start",
-    "build": "npm i && echo -e \"\\033[0;31m TO SET UP MONGODB TYPE: \\033[0;36m \\\"npm run mongo-login \\033[1;36m <YOUR MONGO LOGIN URL>\\\\033[0;36m\\\"\\033[0m\"",
-    "mongo-login": "node mongo-login.js"
+    "start": "node .",
+    "watch": "nodemon .",
+    "deploy": "npm run build && npm run start",
+    "build": "npm i",
+    "mongo-login": "node mongo-login.js",
+    "test": "echo \"COMING SOON\""
   },
   "repository": {
     "type": "git",

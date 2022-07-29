@@ -1,3 +1,1 @@
-{
-"dbUrl": "YOUR MONGODB URL"
-}
+{"dbUrl":"MONGO-URL"}
